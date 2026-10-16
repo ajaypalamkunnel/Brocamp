@@ -1,0 +1,112 @@
+In Node.js, the **Stream module** provides an interface for **handling streaming data**—that is, data that is read or written **sequentially over time**, rather than all at once. Streams are especially useful when working with large files, network operations, or real-time data, because they allow efficient memory usage and faster processing.
+
+---
+
+### 🔧 Four Types of Streams in Node.js
+
+| Type          | Description                                     | Common Methods           |
+| ------------- | ----------------------------------------------- | ------------------------ |
+| **Readable**  | Stream from which data can be read              | `.pipe()`, `.on('data')` |
+| **Writable**  | Stream to which data can be written             | `.write()`, `.end()`     |
+| **Duplex**    | Both readable and writable                      | (e.g., TCP sockets)      |
+| **Transform** | Duplex stream that can modify or transform data | (e.g., compression)      |
+
+---
+
+### 📦 Importing the `stream` Module
+
+```js
+const stream = require('stream');
+```
+
+> But for practical use, we often interact with built-in modules like `fs` (file system), which use stream interfaces internally.
+
+---
+
+## ✅ Example: Reading a File using Streams
+
+Let's say you want to read a large file without loading the entire file into memory:
+
+```js
+const fs = require('fs');
+
+// Create a readable stream
+const readableStream = fs.createReadStream('bigfile.txt', 'utf8');
+
+// Read data chunk by chunk
+readableStream.on('data', (chunk) => {
+    console.log('Received chunk:', chunk);
+});
+
+// Handle end of file
+readableStream.on('end', () => {
+    console.log('Finished reading file.');
+});
+```
+
+---
+
+## ✅ Example: Piping Readable Stream to Writable Stream
+
+This is used to **copy** a file efficiently:
+
+```js
+const fs = require('fs');
+
+const readable = fs.createReadStream('input.txt');
+const writable = fs.createWriteStream('output.txt');
+
+// Pipe data from input.txt to output.txt
+readable.pipe(writable);
+```
+
+### Why `pipe()`?
+
+* It **automatically handles** flow control (pause/resume).
+* It avoids loading entire data into memory.
+
+---
+
+## ✅ Example: Creating a Custom Transform Stream
+
+```js
+const { Transform } = require('stream');
+
+const upperCaseTransform = new Transform({
+  transform(chunk, encoding, callback) {
+    const upperChunk = chunk.toString().toUpperCase();
+    callback(null, upperChunk);
+  }
+});
+
+process.stdin.pipe(upperCaseTransform).pipe(process.stdout);
+```
+
+### Output:
+
+When you type in the terminal, your input is transformed to uppercase in real-time.
+
+---
+
+### 🔍 Why Streams Are Powerful:
+
+* Efficient with memory (doesn’t load whole file/data)
+* Fast for processing large data sets
+* Great for chaining transformations (e.g., compression, encryption)
+
+---
+
+### 🧠 Summary
+
+| Feature     | Benefit                     |
+| ----------- | --------------------------- |
+| `Readable`  | Read data efficiently       |
+| `Writable`  | Write data efficiently      |
+| `Duplex`    | Read & write both ways      |
+| `Transform` | Modify data during transfer |
+
+Node.js Streams are **event-based** and ideal for performance-critical applications that process large amounts of data.
+
+---
+
+If you'd like, I can also provide examples using **HTTP requests**, **zlib compression**, or **file uploads** with streams. Let me know.

@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "target": "ES2015", // Ensures modern JavaScript features like `find` are supported
+        "lib": ["ES2015", "DOM"], // Includes necessary libraries for ES6 and browser DOM
+        "module": "commonjs",
+        "strict": true
+    }
+}

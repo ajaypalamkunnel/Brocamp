@@ -1,0 +1,59 @@
+body{
+    font-family: 'Poppins',sans-serif;
+    color: orange;
+    background-color: black;
+    
+}
+
+html{
+    height: 100%;
+}
+
+header{
+    /* background-color: aqua; */
+    text-align: center;
+    padding-block: 1rem;
+}
+
+
+.task-input{
+    outline: none;
+    border: none;
+    background: unset;
+    width: 100%;
+    font-size: 2rem;
+    color: orange;
+
+}
+.task-input::placeholder{
+    
+    font-weight: bold;
+    color: orange;
+    border-bottom: 2px solid orangered;
+}
+
+.to-do-list{
+    
+    list-style: none;
+    
+    
+   
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+
+.todo-item{
+    display: flex;
+    justify-content: space-between;
+    background-color: #1f1a17;
+    margin-bottom:1rem;
+    margin-right: 1rem;
+    padding: .5rem;
+}
+
+.todo-delete{
+    cursor: pointer;
+}
+
+

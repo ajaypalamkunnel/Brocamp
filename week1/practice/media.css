@@ -1,0 +1,55 @@
+body {
+  margin: 0;
+}
+header {
+  display: flex;
+  padding: 16px;
+  background-color: rgb(45, 10, 77);
+  color: white;
+}
+header .title{
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+header .desktop-nav{
+    display: flex;
+    margin: 0;
+}
+
+header li{
+    text-decoration: none;
+    list-style: none;
+    padding: 0 10px;
+}
+
+header li a{
+    text-decoration: none;
+    color: white;
+}
+.ul{
+    display: flex;
+}
+
+.container{
+    margin: 1rem;
+}
+
+.section{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: center;
+    gap: 1rem;
+}
+
+
+.section .box{
+    width: 300px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    border-radius: 16px;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: auto;
+    gap: 1rem;
+    justify-items: center;
+}

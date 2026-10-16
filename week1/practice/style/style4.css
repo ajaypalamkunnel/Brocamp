@@ -1,0 +1,60 @@
+.maindiv{
+    border: 8px solid green;
+    height: 500px;
+    width: 600px;
+    background-color: aquamarine;
+}   
+
+.child{
+    width: 200px;
+    height: 200px;  
+    border: 8px solid green;
+    padding: 5px;
+    background-color: blueviolet;
+
+}
+.child-content{
+    padding: auto;
+}
+
+.child:hover{
+    display: none;
+}
+.container{
+    background-color: orangered;
+    display: flex;
+    padding: 10px;
+    flex-wrap: wrap;
+    
+}
+.c1{
+    padding: 7px;
+    color: white;
+    border: 2px solid white;
+    background-color: green;
+    
+}
+.grid-container{
+    display: grid;
+    grid-template-columns: min-content 1fr 4fr;
+    grid-row-gap: 4px;
+}
+.item{
+
+    background: rgb(99, 99, 212);
+    border: 2px solid;
+    padding: 20px;
+    
+}
+
+.item1{
+    background-color: rgb(35, 8, 60);
+}
+
+.item2{
+    background-color: rgb(30, 10, 30);
+}
+.item3{
+    background-color: rgb(195, 121, 2);
+}
+

@@ -1,0 +1,214 @@
+Decoding React’s Reconciliation and Diffing Algorithm: A Brief Overview
+Liubomyr
+Liubomyr
+
+Follow
+5 min read
+·
+Mar 8, 2024
+356
+
+
+
+
+
+
+In the realm of React, magic happens as it weaves a virtual tapestry of components known as the Virtual DOM — a dynamic representation crafted from React Elements, which are nothing more than nimble JavaScript objects. This seamless creation occurs with a simple call to the render method, setting the stage for an efficient and speedy process.
+
+However, the plot thickens when it comes to updating the actual DOM. The initial rendering is straightforward, but what if something changes? Re-rendering the entire tree would be inefficient and demanding. Enter the protagonist of our tale — the Diffing algorithm.
+
+The Diffing algorithm earns its name from its mission: to differentiate trees. When changes occur, React employs this algorithm to discern the nuances between the previous and current states. It’s a dance of efficiency, ensuring that only the necessary updates find their way to the DOM.
+
+In our exploration, we’ve scratched the surface of React’s Virtual DOM and the need for the Diffing algorithm. But stay tuned, as our journey is far from over. In the upcoming deep dive, we’ll unravel the intricacies of this algorithm, understanding how it delicately orchestrates the magic of React’s responsiveness. Join us as we venture into the heart of React’s update mechanism — the Diffing algorithm. 🚀
+
+Zoom image will be displayed
+
+React operates by creating a tree of React component objects known as the Virtual DOM, a process initiated when the render method is called. This approach is highly efficient, as React Elements are essentially plain JavaScript objects. To get the vision of VDOM check my previous article
+
+Upon the initial rendering, React comprehensively updates the DOM, which can be resource-intensive. However, as changes occur, it becomes impractical to re-render the entire tree. To address this, an algorithm is employed to detect updates, known as the Diffing algorithm. The term “diffing” is apt, as the objective is to discern the distinctions between the trees.
+
+Zoom image will be displayed
+
+In essence, React optimizes performance by efficiently managing updates through the Virtual DOM and employing the Diffing algorithm to selectively modify only the necessary parts of the DOM, minimizing the computational load associated with rendering. This strategic approach ensures that React applications remain responsive and resource-efficient even as changes occur in the underlying data or state.
+
+Diffing algorithm
+As VDOM is a tree, we should provide algorithms to investigate all changes in that tree. As per graph theory, investigating the entire tree complexity is O(n³), which proves impractical for our needs. Considering that for 1000 nodes, we’d be dealing with a staggering one billion operations each time an update occurs, it becomes apparent that this approach is far too cumbersome.
+
+However, React developers have ingeniously devised different algorithms that operate with a much more manageable complexity of O(n), making the process incredibly fast and efficient. This advancement allows React to handle updates swiftly and maintain optimal performance even with a substantial number of nodes, providing a solution that is both scalable and responsive.
+
+Zoom image will be displayed
+
+How did they achieve this? They made two assumptions about trees.
+
+Different types will produce different trees. For some, this might seem obvious, but it’s not always the case since only one cell in the chain can be changed, and not all cells after that. However, with this assumption, we can achieve such performance.
+When we have a list of child elements that often change, we should provide a unique “key” as a prop
+That’s the reason why we should not use the index as the key. Since if we add one more child, all keys will be shifted, and the tree will be completely re-rendered
+
+Let’s see some examples:
+
+Suppose we have a React Element and change it to another React Element.
+Zoom image will be displayed
+
+Since the type changes, all DOM inside the div will be re-rendered. The old tree is destroyed along with their state.
+
+Suppose we have one React Element and change a prop.
+Zoom image will be displayed
+
+The result is that props get updates, instances stay the same, and the state is maintained.
+
+Suppose we have a list of elements, and add some more elements.
+The result — all elements will be re-rendered and their states will be erased.
+
+Zoom image will be displayed
+
+At least in the last example, it looks weird. Why do we just add the new element to the trees, but the complete tree will re-render?
+
+It isn’t what we want. If we had +100500 items and added some to the beginning of the list, we wouldn’t want to re-render the whole tree. So we provide keys. Using keys, we tell the reconciler, "Hey, you know me; it’s me, Mario.”
+
+React Fiber
+What type is used, and how does the algorithm work? This leads us to the React Fiber Engine. In a nutshell, it’s a tree of objects representing the VDOM, which in turn represents the DOM.
+
+The diffing algorithm process is then handed over to ReactDOM, which takes care of updating the actual DOM. In essence, React serves as a library that provides the VDOM and the Reconciliation Fiber Algorithm.
+
+This design is pivotal, as it enables React to apply the same reconciliation algorithm across various environments, such as the Web and React Native. It showcases the versatility of React, making it adaptable and efficient in different settings while maintaining a consistent approach to managing updates and rendering.
+
+What is React Fiber, how does the algorithm work precisely, and how can most of the implementation live in the renderer package? In the next article. See ya!
+
+React
+Reactjs
+React Native
+JavaScript
+Redux
+356
+
+
+
+
+
+Liubomyr
+Written by Liubomyr
+15 followers
+·
+24 following
+I like deep neural networks and React.js
+
+
+Follow
+No responses yet
+Ajaypalamkunnel
+Ajaypalamkunnel
+﻿
+
+Cancel
+Respond
+More from Liubomyr
+React Fiber: Reconciliation under the hood (with links to source code)
+Liubomyr
+Liubomyr
+
+React Fiber: Reconciliation under the hood (with links to source code)
+Fiber is the reconciliation engine in React 16. Its main goal is to enable incremental rendering of the virtual DOM. Fiber is a really…
+Mar 12, 2024
+555
+1
+
+
+Understanding VDOM, React Components and Elements: A Professional Insight
+Liubomyr
+Liubomyr
+
+Understanding VDOM, React Components and Elements: A Professional Insight
+If you find yourself here, you’re probably already acquainted with the fundamental concept of React. Now, as you tread further into the…
+Mar 3, 2024
+334
+1
+
+
+See all from Liubomyr
+Recommended from Medium
+Learn body-parser Middleware in Node.js with Examples
+JavaScript in Plain English
+In
+
+JavaScript in Plain English
+
+by
+
+codingsprints
+
+Learn body-parser Middleware in Node.js with Examples
+Learn how to use body-parser middleware in Node.js to parse JSON, form, and raw request bodies. Full examples and explanations included.
+
+3d ago
+1
+
+
+What Does a Front-End Architect Actually Do?
+Scripting Soul
+Scripting Soul
+
+What Does a Front-End Architect Actually Do?
+Your guide to getting there.
+
+5d ago
+251
+5
+
+
+deep linking react native article
+Aneeqa Khan
+Aneeqa Khan
+
+How to Set Up and Use Deep Linking in React Native
+Introduction
+
+Feb 3
+11
+
+
+What’s New in React 19? The Coolest Features
+Alexander Burgos
+Alexander Burgos
+
+What’s New in React 19? The Coolest Features
+React 19 just came out, and it’s packed with exciting new things to make our life as a UX Engineer and Front-end developers easier and your…
+Mar 22
+1
+
+
+React Interview Questions & Answers
+Sachinthana Lokuyaddage
+Sachinthana Lokuyaddage
+
+React Interview Questions & Answers
+Q1) . What is React and what problem does it solve?
+
+Feb 10
+4
+
+
+Performance Optimization in React js
+React Masters
+React Masters
+
+Performance Optimization in React js
+Introduction
+Feb 19
+16
+
+
+See more recommendations
+Help
+
+Status
+
+About
+
+Careers
+
+Press
+
+Blog
+
+Privacy
+

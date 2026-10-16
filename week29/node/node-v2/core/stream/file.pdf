@@ -1,0 +1,128 @@
+The **`stream` module** in Node.js is a **core module** that allows you to **work with streaming data** — handling data **piece by piece**, instead of loading it all at once into memory.
+
+This is especially useful for:
+
+* Reading/writing large files
+* Sending/receiving data over the network
+* Processing real-time audio/video
+* Efficient memory usage
+
+---
+
+## 🔹 What is a Stream?
+
+A **stream** is an **abstract interface** for working with data that flows over time. Streams are **event-based** and allow **asynchronous** reading/writing of data.
+
+There are **four main types** of streams in Node.js:
+
+| Type        | Description                         | Example                   |
+| ----------- | ----------------------------------- | ------------------------- |
+| `Readable`  | Stream from which data can be read  | Reading a file            |
+| `Writable`  | Stream to which data can be written | Writing to a file         |
+| `Duplex`    | Both readable and writable          | TCP sockets               |
+| `Transform` | Modify data as it is written/read   | Compressing/decompressing |
+
+---
+
+## 🔹 Importing the `stream` Module
+
+```js
+const stream = require('stream');
+```
+
+But often, you use it via modules like `fs`, `http`, etc., which are built on top of the `stream` module.
+
+---
+
+## 🔹 Example: Reading a File with Streams
+
+```js
+const fs = require('fs');
+
+const readableStream = fs.createReadStream('largefile.txt', { encoding: 'utf8' });
+
+readableStream.on('data', (chunk) => {
+    console.log('Received chunk:', chunk);
+});
+
+readableStream.on('end', () => {
+    console.log('Finished reading file.');
+});
+
+readableStream.on('error', (err) => {
+    console.error('Error:', err.message);
+});
+```
+
+> This reads the file **in chunks**, not all at once — which is memory-efficient.
+
+---
+
+## 🔹 Example: Writing to a File with Streams
+
+```js
+const fs = require('fs');
+
+const writableStream = fs.createWriteStream('output.txt');
+
+writableStream.write('Hello, this is line 1\n');
+writableStream.write('This is line 2\n');
+
+writableStream.end('Finished writing.\n');
+```
+
+---
+
+## 🔹 Example: Pipe – Connecting Readable and Writable Streams
+
+```js
+const fs = require('fs');
+
+const readable = fs.createReadStream('input.txt');
+const writable = fs.createWriteStream('copied.txt');
+
+readable.pipe(writable);
+```
+
+> The `pipe()` method **automatically reads** from the source and **writes** to the destination.
+
+---
+
+## 🔹 Transform Stream Example
+
+```js
+const { Transform } = require('stream');
+
+const upperCaseTransform = new Transform({
+  transform(chunk, encoding, callback) {
+    const upper = chunk.toString().toUpperCase();
+    callback(null, upper);
+  }
+});
+
+process.stdin.pipe(upperCaseTransform).pipe(process.stdout);
+```
+
+> Type something in terminal — it will be converted to uppercase using a transform stream.
+
+---
+
+## 🔹 Real-World Use Cases
+
+* Serving large files like PDFs or videos
+* Logging system (stream logs to a file)
+* Building CLI tools (using `stdin`, `stdout`)
+* Upload/download systems
+* Audio/video processing pipelines
+
+---
+
+## ✅ Advantages of Streams
+
+* **Efficient memory usage**
+* **Non-blocking**, async handling
+* **Built-in backpressure** management (adjusts data flow rate automatically)
+
+---
+
+Would you like a mini-project like a file compressor using streams or a live logger app with real-time updates? I’d be happy to help!

@@ -1,0 +1,24 @@
+#detailed{
+    color: chocolate;
+}
+.div1{
+    background-color: rgb(47, 29, 59);
+    width: 400px;
+    height: 500px;
+    margin-left: 50px;
+    padding: 50%;
+    border: 6px solid;
+    border-color: aliceblue;
+}
+.div2{
+    background-color: aqua;
+    width: 200px;
+    height: 250px;
+    padding: 50%;
+}
+.div3{
+    background-color: rgb(252, 227, 3);
+    width: 100px;
+    height: 150px;
+    padding: 50%;
+}

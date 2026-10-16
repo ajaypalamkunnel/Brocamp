@@ -1,0 +1,10 @@
+.auth_login{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+    background-color:rgb(106, 17, 106);
+    padding: 60px;
+    border-radius: 3%;
+
+}

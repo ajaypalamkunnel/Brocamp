@@ -1,0 +1,111 @@
+Hello from event emitter!
+
+### 📶 What is the `stream` Module in Node.js?
+
+The `stream` module in Node.js is a **core module** that allows you to **read or write data in chunks** instead of loading the entire data into memory at once.
+
+> ✅ It's built into Node.js — no installation needed.
+
+---
+
+## 🚀 Why Use Streams?
+
+Streams are ideal for **handling large data** (e.g., files, video, audio, network data) efficiently, without blocking the event loop or consuming too much memory.
+
+### ✅ Benefits:
+
+* Memory-efficient
+* Faster for I/O-bound operations
+* Non-blocking and scalable
+
+---
+
+## 🔍 Types of Streams
+
+| Type        | Description                       | Example                       |
+| ----------- | --------------------------------- | ----------------------------- |
+| `Readable`  | Can be read from                  | `fs.createReadStream()`       |
+| `Writable`  | Can be written to                 | `fs.createWriteStream()`      |
+| `Duplex`    | Can be read from and written to   | TCP sockets                   |
+| `Transform` | Like Duplex but modifies the data | Compression, encryption, etc. |
+
+---
+
+## ✅ Importing the Module
+
+```js
+const stream = require('stream');
+```
+
+But usually, we use it **via modules like `fs`**, which are stream-based.
+
+---
+
+## 🧪 Example: Reading a File Using Stream
+
+```js
+const fs = require('fs');
+
+const readStream = fs.createReadStream('bigfile.txt', 'utf8');
+
+readStream.on('data', (chunk) => {
+  console.log('Received chunk:', chunk);
+});
+
+readStream.on('end', () => {
+  console.log('Finished reading file.');
+});
+
+readStream.on('error', (err) => {
+  console.error('Error reading file:', err);
+});
+```
+
+### 🔍 What this does:
+
+* Reads the file **bit by bit** (chunk by chunk).
+* Prevents blocking the main thread (unlike `fs.readFile`).
+
+---
+
+## ✅ Example: Copy File Using Pipe (Readable → Writable)
+
+```js
+const fs = require('fs');
+
+const readStream = fs.createReadStream('input.txt');
+const writeStream = fs.createWriteStream('output.txt');
+
+readStream.pipe(writeStream);
+```
+
+### 🔄 Explanation:
+
+* `pipe()` connects the **output of one stream** to the **input of another**.
+* This is memory-efficient and non-blocking.
+
+---
+
+## ✅ Real Use Cases
+
+| Use Case               | Usage                                            |
+| ---------------------- | ------------------------------------------------ |
+| File uploads/downloads | Handling large files without loading all at once |
+| HTTP streaming         | Stream audio/video in chunks                     |
+| Logging                | Stream logs to file in real-time                 |
+| Piping processes       | Chain multiple stream operations                 |
+
+---
+
+## 🧠 Summary Table
+
+| Concept           | Purpose                            |
+| ----------------- | ---------------------------------- |
+| `Readable Stream` | Source of data (e.g., files, HTTP) |
+| `Writable Stream` | Destination (e.g., write to file)  |
+| `pipe()`          | Connect readable to writable       |
+| `chunk`           | A small part of the data stream    |
+
+---
+
+Let me know if you want to learn about **Transform Streams** or how to **create a custom stream**!
