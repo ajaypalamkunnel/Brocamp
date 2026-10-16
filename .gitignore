@@ -1,38 +1,29 @@
 
-# Dependencies - all nested projects
+# Dependencies
+**/node_modules/
 node_modules/
-**/node_modules/**
 
-# Environment files
-.env
-.env.*
-!.env.example
-!.env.sample
+# Ignore nested Git repositories
+**/.git/
 
 # Build outputs
-dist/
-build/
-.next/
-coverage/
-.vite/
-.cache/
+**/dist/
+**/build/
+**/.next/
+**/coverage/
 
-# Logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-pnpm-debug.log*
+# Environment files
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.sample
+
+# Logs and caches
+**/*.log
+**/.cache/
+**/.vite/
 
 # OS files
-.DS_Store
-Thumbs.db
-Desktop.ini
-
-# IDE files
-.idea/
-.vscode/
-
-# Temporary files
-*.tmp
-*.temp
-*.bak
+**/.DS_Store
+**/Thumbs.db
+**/Desktop.ini
